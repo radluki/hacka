@@ -4,6 +4,7 @@ from django.db import models
 
 
 class Question(models.Model):
+    id = models.IntegerField(primary_key=True)
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
     def __str__(self):
@@ -17,4 +18,15 @@ class Choice(models.Model):
 
     def __str__(self):
         return self.choice_text
+
+class User(models.Model):
+    id = models.IntegerField(primary_key=True)
+    login = models.CharField(max_length=200)
+    password = models.CharField(max_length=200)
+    longitude = models.FloatField()
+    latitude = models.FloatField()
+
+    def __str__(self):
+        return "User("+self.login+")"
+    
 

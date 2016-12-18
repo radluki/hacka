@@ -1,14 +1,15 @@
 from django.shortcuts import render
 from django.core import serializers
 import json
+import django.utils.timezone as timezone 
 
 # Create your views here.
 
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 
-from .models import Choice, Question, User
+from .models import Question, User
 # ...
 
 def index(request):
@@ -28,25 +29,35 @@ def getdata(request, login, password):
         for k in all_users:
             tmp = {"login":k.login,"longitude":k.longitude,"latitude":k.latitude}
             u_json.append(tmp)
-        u_json = json.dumps(u_json)
+        #u_json = json.dumps(u_json)
         #u_json = serializers.serialize('json', User.objects.all())
-    except:
-        u_json = 'Authentication failed'    
+    except Exception as e:
+        u_json = ['Authentication failed']    
     
-    return HttpResponse(u_json)
+    return JsonResponse(u_json,safe=False)
 
 def sendlocal(request, login, password,longitude,latitude):
     try:
         u = User.objects.filter(login=login,password=password)[0]
         u.longitude = longitude
         u.latitude = latitude
+        u.date = timezone.now()
         u.save()
         data = [longitude,latitude]
-    except:
-        data = 'Authentication failed'    
+    except Exception as e:
+        data = ['Authentication failed']    
     
-    return HttpResponse(data)
+    return JsonResponse(data,safe=False)
 
-def register(request,login,password)
-    pass
+def register(request,login,password):
+    try:
+        u = User.objects.filter(login=login)[0]
+        message = 'User '+login+' already in database'
+    except Exception as e:
+        u = User(login=login, password=password,longitude=0,latitude=0,date=timezone.now())
+        u.save()
+        u = User.objects.filter(login=login)[0]
+        message = {k:v for k,v in u.__dict__.items() if k!='_state'}
+
+    return JsonResponse(message,safe=False)
 

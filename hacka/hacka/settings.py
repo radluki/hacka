@@ -25,7 +25,7 @@ SECRET_KEY = '=fynp_@-&0auz9*jv5mdssh8li+9c*g_+7ue%*8#v$yk4d8eny'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.140.181','192.168.140.184','localhost']
+ALLOWED_HOSTS = ['192.168.140.181','192.168.140.184','localhost','192.168.43.198','192.168.43.181','192.168.43.*']
 
 
 # Application definition
@@ -74,13 +74,13 @@ WSGI_APPLICATION = 'hacka.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
+
 DATABASES = {
-    'default': {
+   'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -106,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Warsaw'
 
 USE_I18N = True
 

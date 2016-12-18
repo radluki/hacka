@@ -20,7 +20,7 @@ def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     return HttpResponse(question)
 
-def send(request, login, password):
+def getdata(request, login, password):
     try:
         u = User.objects.filter(login=login,password=password)[0]
         all_users = User.objects.all()
@@ -35,7 +35,7 @@ def send(request, login, password):
     
     return HttpResponse(u_json)
 
-def sendloc(request, login, password,longitude,latitude):
+def sendlocal(request, login, password,longitude,latitude):
     try:
         u = User.objects.filter(login=login,password=password)[0]
         u.longitude = longitude
